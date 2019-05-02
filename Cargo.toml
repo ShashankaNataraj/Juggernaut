@@ -1,0 +1,8 @@
+[package]
+name = "Juggernaut"
+version = "0.1.0"
+authors = ["Shashanka N <shasn@cisco.com>"]
+edition = "2018"
+
+[dependencies]
+web-view = { git = "https://github.com/Boscop/web-view" }
