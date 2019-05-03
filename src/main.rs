@@ -5,7 +5,7 @@ use std::fs;
 
 fn main() {
     web_view::builder()
-        .title("Juggernaut")
+        .title("Juggernaut Editor")
         .content(Content::Html(include_str!("web/index.html")))
         .size(800, 600)
         .resizable(true)
@@ -14,11 +14,12 @@ fn main() {
         .invoke_handler(|webview, arg| {
             match arg {
                 "read" => {
-                    println!("reading file!");
                     let file_content = include_str!("web/index.html");
                     println!("{}",file_content);
-                    let string1 = "Hello, world!";
-                    webview.eval("file_operation({asdasd:'asdasd'})");
+                    let string1 = r#"Hello, world!"#;
+                    let mut formattedString = &format!("file_operation(\"{}\")",string1);
+                    println!("{}",formattedString);
+                    webview.eval(formattedString);
                 },
                 _ => unimplemented!()
             };
