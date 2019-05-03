@@ -17,7 +17,8 @@ fn main() {
                     println!("reading file!");
                     let file_content = include_str!("web/index.html");
                     println!("{}",file_content);
-                    webview.eval(&format!("file_operation({})", file_content))
+                    let string1 = "Hello, world!";
+                    webview.eval("file_operation({asdasd:'asdasd'})");
                 },
                 _ => unimplemented!()
             };
