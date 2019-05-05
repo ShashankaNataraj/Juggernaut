@@ -16,7 +16,7 @@ fn main() {
                 "read" => {
                     let file_content = include_str!("web/index.html");
                     println!("{}",file_content);
-                    let string1 = r#"Hello, world!"#;
+                    let string1 = r#"Hello, world1!"#;
                     let mut formattedString = &format!("file_operation(\"{}\")",string1);
                     println!("{}",formattedString);
                     webview.eval(formattedString);
