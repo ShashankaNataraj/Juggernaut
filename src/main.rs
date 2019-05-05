@@ -2,6 +2,7 @@ extern crate web_view;
 
 use web_view::*;
 use std::fs;
+use serde_json;
 
 fn main() {
     web_view::builder()
@@ -15,10 +16,7 @@ fn main() {
             match arg {
                 "read" => {
                     let file_content = include_str!("web/index.html");
-                    println!("{}",file_content);
-                    let string1 = r#"Hello, world1!"#;
-                    let mut formattedString = &format!("file_operation(\"{}\")",string1);
-                    println!("{}",formattedString);
+                    let mut formattedString = &format!("load_file({})",serde_json::to_string(file_content).unwrap());
                     webview.eval(formattedString);
                 },
                 _ => unimplemented!()

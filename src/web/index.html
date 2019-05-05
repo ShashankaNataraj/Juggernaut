@@ -23,8 +23,8 @@
             editor.setTheme("ace/theme/monokai");
             editor.setKeyboardHandler("ace/keyboard/vim");
             editor.setBehavioursEnabled(true);
-            function file_operation(content){
-                alert(JSON.stringify(content));
+            function load_file(content){
+	            editor.setValue(unescape(content));
             }
         </script>
     </body>
