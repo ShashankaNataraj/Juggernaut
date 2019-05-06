@@ -10,22 +10,11 @@
         </style>
     </head>
     <body>
-        <button onclick="external.invoke('read')">Open</button>
-        <button onclick="external.invoke('exit')">Exit</button>
+        <button onclick="external.invoke({cmd:'read'})">Open</button>
+        <button onclick="external.invoke({cmd:'exit'})">Exit</button>
         <div id="editor" style="height:100%"></div>
         <div id="status" style="width:100%"></div>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/keybinding-vim.js"></script>
-        <script>
-            let editor = ace.edit(document.querySelector('#editor'), {
-                mode:"ace/mode/html"
-            });
-            editor.setTheme("ace/theme/monokai");
-            editor.setKeyboardHandler("ace/keyboard/vim");
-            editor.setBehavioursEnabled(true);
-            function load_file(content){
-	            editor.setValue(unescape(content));
-            }
-        </script>
     </body>
 </html>
