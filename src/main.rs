@@ -3,8 +3,8 @@ extern crate web_view;
 use web_view::*;
 use std::fs;
 use serde_json;
-use std::fs::File;
-use std::io::Write;
+//use std::fs::File;
+//use std::io::Write;
 
 fn main() {
     web_view::builder()

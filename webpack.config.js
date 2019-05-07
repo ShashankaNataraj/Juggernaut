@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin'),
- ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+	ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 
 module.exports = {
@@ -7,6 +7,25 @@ module.exports = {
 	entry: "./src/web/app.js", //relative to root of the application
 	output: {
 		filename: "./app.bundle.js" //relative to root of the application
+	},
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader"
+				}
+			},
+			{
+				test: /\.html$/,
+				use: [
+					{
+						loader: "html-loader"
+					}
+				]
+			}
+		]
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
