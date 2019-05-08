@@ -1,5 +1,6 @@
-import * as $ from "jquery";
-
+import * as $ from 'jquery';
+import Swal from 'sweetalert2';
+import "./styles/styles.scss";
 $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html"
@@ -11,7 +12,10 @@ $(() => {
 		name: 'Search For Files',
 		bindKey: {mac: 'Cmd-Shift-O'},
 		exec: function (editor){
-			alert(1);
+			Swal.fire({
+				html:$('#find-files-dialog').html(),
+				showConfirmButton:false
+			})
 		},
 		readOnly: true // false if this command should not apply in readOnly mode
 	});

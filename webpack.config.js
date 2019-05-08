@@ -11,11 +11,29 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: require.resolve("jquery"),
+				use: "imports-loader?this=>window"
+			},
+			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader"
 				}
+			},
+			{
+				test: /\.scss$/,
+				use: [{
+					loader: "style-loader"
+				}, {
+					loader: "css-loader"
+				}, {
+					loader: "sass-loader"
+				}]
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader'],
 			},
 			{
 				test: /\.html$/,
