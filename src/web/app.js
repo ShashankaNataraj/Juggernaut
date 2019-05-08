@@ -15,10 +15,11 @@ $(() => {
 			Swal.fire({
 				html:$('#find-files-dialog').html(),
 				showConfirmButton:false
-			})
+			});
 		},
 		readOnly: true // false if this command should not apply in readOnly mode
 	});
+	external.invoke('read');
 	window.load_file = function (content){
 		editor.setValue(content);
 		editor.gotoLine(0);
