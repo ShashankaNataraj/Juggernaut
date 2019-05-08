@@ -14,6 +14,7 @@ https://github.com/Microsoft/vscode/issues/49161
 ## Objectives
 
 - Fast
+- Rock Solid
 - Lightweight
 - Aesthetics
 - Completely keyboard driven navigation
