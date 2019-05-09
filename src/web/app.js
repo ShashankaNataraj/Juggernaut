@@ -1,6 +1,7 @@
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import "./styles/styles.scss";
+import Templates from "./TemplateMapping";
 $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html"
@@ -13,7 +14,7 @@ $(() => {
 		bindKey: {mac: 'Cmd-Shift-O'},
 		exec: function (editor){
 			Swal.fire({
-				html:$('#find-files-dialog').html(),
+				html:Templates.getTemplate('find-files-dialog',{}),
 				showConfirmButton:false
 			});
 		},

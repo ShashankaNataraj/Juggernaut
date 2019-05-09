@@ -42,7 +42,8 @@ module.exports = {
 						loader: "html-loader"
 					}
 				]
-			}
+			},
+			{ test: /\.hbs$/, loader: "handlebars-loader" }
 		]
 	},
 	plugins: [

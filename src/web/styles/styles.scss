@@ -1,16 +1,12 @@
 @import "./variables.scss";
+@import "./editor.scss";
+@import "./find-files.scss";
 body{
-  margin:0px;
+  margin:0;
+  // Prevent unnecessary yanking of the page to the left / extreme right when using the mac trackpad
+  overflow-x:hidden;
+  overflow-y:hidden;
 }
-.hide{
+.hidden{
   display:none;
-}
-#find-files-dialog input {
-  width:100%;
-}
-.find-files-container{
-  width:100%;
-}
-.find-files-container input {
-  width:100%;
 }

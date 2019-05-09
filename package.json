@@ -28,6 +28,8 @@
   "dependencies": {
     "ace-builds": "^1.4.4",
     "font-awesome": "^4.7.0",
+    "handlebars": "^4.1.2",
+    "handlebars-loader": "^1.7.1",
     "jquery": "^3.4.1",
     "sweetalert2": "^8.10.2"
   }
