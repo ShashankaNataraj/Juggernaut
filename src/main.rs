@@ -12,7 +12,8 @@ extern crate serde_json;
 #[serde(tag = "cmd", rename_all = "camelCase")]
 pub enum Cmd {
     Init,
-    Read { file: String }
+    Read { file: String },
+    Write{ file: String, contents:String}
 }
 fn main() {
     web_view::builder()
@@ -25,21 +26,24 @@ fn main() {
         .invoke_handler(|_webview, arg| {
             use Cmd::*;
             match serde_json::from_str(arg).unwrap() {
-                    Init => (),
-                    Read { file } => {
-                        let mut file = File::open(file)
-                            .expect("Unable to open the file");
-                        let mut contents = String::new();
-                        file.read_to_string(&mut contents)
-                            .expect("Unable to read the file");
+                Init => (),
+                Read { file } => {
+                    let mut file = File::open(file)
+                        .expect("Unable to open the file");
+                    let mut contents = String::new();
+                    file.read_to_string(&mut contents)
+                        .expect("Unable to read the file");
 
-                        let formatted_string = &format!("load_file({})",
-                            serde_json::to_string(&contents).unwrap()
-                        );
-                        _webview.eval(formatted_string);
-                    },
-                    _ => unimplemented!()
+                    let formatted_string = &format!("load_file({})",
+                        serde_json::to_string(&contents).unwrap()
+                    );
+                    _webview.eval(formatted_string);
+                },
+                Write {file, contents} => {
+
                 }
+                _ => unimplemented!()
+            }
             Ok(())
         })
         .run()
