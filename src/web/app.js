@@ -4,11 +4,12 @@ import "./styles/styles.scss";
 import Templates from "./TemplateMapping";
 $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
-		mode: "ace/mode/html"
+		mode: "ace/mode/html",
+		showPrintMargin:false,
+		theme:"ace/theme/github",
+		keyboardHandler:"ace/keyboard/vim",
+		behavioursEnabled:true
 	});
-	editor.setTheme("ace/theme/github");
-	editor.setKeyboardHandler("ace/keyboard/vim");
-	editor.setBehavioursEnabled(true);
 	editor.commands.addCommand({
 		name: 'Search For Files',
 		bindKey: {mac: 'Cmd-Shift-O'},
@@ -20,7 +21,7 @@ $(() => {
 		},
 		readOnly: true // false if this command should not apply in readOnly mode
 	});
-	external.invoke('read');
+	external.invoke(JSON.stringify({cmd:"read",file:"/Users/shasn/Code/Juggernaut/dist/index.html"}));
 	window.load_file = function (content){
 		editor.setValue(content);
 		editor.gotoLine(0);

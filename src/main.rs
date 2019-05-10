@@ -2,10 +2,18 @@ extern crate web_view;
 
 use web_view::*;
 use std::fs;
-use serde_json;
-//use std::fs::File;
-//use std::io::Write;
+use std::io::prelude::*;
+use std::fs::File;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_json;
 
+#[derive(Deserialize)]
+#[serde(tag = "cmd", rename_all = "camelCase")]
+pub enum Cmd {
+    Init,
+    Read { file: String }
+}
 fn main() {
     web_view::builder()
         .title("Juggernaut Editor")
@@ -14,23 +22,24 @@ fn main() {
         .resizable(true)
         .debug(true)
         .user_data(())
-        .invoke_handler(|webview, arg| {
-            match arg {
-                "read" => {
-                    let file_content = include_str!("../dist/index.html");
-                    let mut formatted_string = &format!("load_file({})",serde_json::to_string(file_content).unwrap());
-                    webview.eval(formatted_string);
-                },
-                "write" => {
+        .invoke_handler(|_webview, arg| {
+            use Cmd::*;
+            match serde_json::from_str(arg).unwrap() {
+                    Init => (),
+                    Read { file } => {
+                        let mut file = File::open(file)
+                            .expect("Unable to open the file");
+                        let mut contents = String::new();
+                        file.read_to_string(&mut contents)
+                            .expect("Unable to read the file");
 
-//                    let mut file = File::create("hello_world.txt")
-//                        .expect("unable to create file");
-//                    serde_json::to_string(file_content).unwrap();
-//                    file.write_all(output.as_bytes()).expect("unable to write");
-
+                        let formatted_string = &format!("load_file({})",
+                            serde_json::to_string(&contents).unwrap()
+                        );
+                        _webview.eval(formatted_string);
+                    },
+                    _ => unimplemented!()
                 }
-                _ => unimplemented!()
-            };
             Ok(())
         })
         .run()
