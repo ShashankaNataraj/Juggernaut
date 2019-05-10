@@ -1,7 +1,6 @@
 extern crate web_view;
 
 use web_view::*;
-use std::fs;
 use std::io::prelude::*;
 use std::fs::File;
 #[macro_use]
@@ -39,10 +38,9 @@ fn main() {
                     );
                     _webview.eval(formatted_string);
                 },
-                Write {file, contents} => {
+                Write {file:_, contents:_} => {
 
                 }
-                _ => unimplemented!()
             }
             Ok(())
         })

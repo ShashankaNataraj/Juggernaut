@@ -9,7 +9,7 @@ $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html",
 		showPrintMargin:false,
-		theme:"ace/theme/github",
+		theme:"ace/theme/gruvbox",
 		keyboardHandler:"ace/keyboard/vim",
 		behavioursEnabled:true
 	});
