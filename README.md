@@ -15,6 +15,7 @@ There are many editors out there, but this one is mine. And, I can learn Rust wh
 
 ## Objectives in order of priority
 - Fast
+- Predictable
 - Rock Solid
 - Modal based
 - Lightweight

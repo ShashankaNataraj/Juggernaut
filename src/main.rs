@@ -17,9 +17,9 @@ pub enum Cmd {
 }
 fn main() {
     web_view::builder()
-        .title("Juggernaut Editor")
+        .title("Juggernaut")
         .content(Content::Html(include_str!("../dist/index.html")))
-        .size(800, 600)
+        .size(2068, 1024) // Resolution is fixed right now, change this later to be dynamic
         .resizable(true)
         .debug(true)
         .user_data(())

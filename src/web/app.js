@@ -3,6 +3,8 @@ import Swal from 'sweetalert2';
 import "./styles/styles.scss";
 import Templates from "./TemplateMapping";
 import Keys from "./Keys";
+import RPC from "./RPC";
+
 $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html",
@@ -19,8 +21,8 @@ $(() => {
 			});
 		}
 	})
+	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
 	
-	external.invoke(JSON.stringify({cmd:"read",file:"/Users/shasn/Code/Juggernaut/dist/index.html"}));
 	window.load_file = function (content){
 		editor.setValue(content);
 		editor.gotoLine(0);
