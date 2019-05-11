@@ -13,6 +13,11 @@ $(() => {
 		keyboardHandler:"ace/keyboard/vim",
 		behavioursEnabled:true
 	});
+	editor.container.addEventListener('keydown', function(a,b,c){
+		console.log(a);
+		console.log(b);
+		console.log(c);
+	}, true)
 	Keys.bindShortcuts(editor, {
 		'find-files-dialog':function(editor){
 			Swal.fire({
