@@ -1,8 +1,8 @@
 @import "./variables.scss";
 @import "./editor.scss";
 @import "./find-files.scss";
+// @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 body{
-  margin:0;
   // Prevent unnecessary yanking of the page to the left / extreme right when using the mac trackpad
   overflow-x:hidden;
   overflow-y:hidden;
