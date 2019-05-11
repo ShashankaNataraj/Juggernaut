@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin'),
-	ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+	ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
+	MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 
 module.exports = {
@@ -10,10 +11,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				test: require.resolve("jquery"),
-				use: "imports-loader?this=>window"
-			},
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
@@ -56,6 +53,7 @@ module.exports = {
 		new ScriptExtHtmlWebpackPlugin({
 			inline: 'bundle',
 			preload: /\.js$/
-		})
+		}),
+		new MonacoWebpackPlugin()
 	]
 };
