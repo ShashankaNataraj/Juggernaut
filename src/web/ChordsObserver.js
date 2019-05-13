@@ -6,13 +6,13 @@ export default class ChordsObserver {
 		this.chordsSoFar = [];
 	}
 
-	static init(editor){
+	static init(cfg){
 		this.resetChordState();
-		editor.container.addEventListener('keydown', this.chordListener.bind(this,editor), true);
+		cfg.editor.container.addEventListener('keydown', this.chordListener.bind(this,cfg), true);
 	}
 
-	static chordListener(editor, evt){
-		const isInsertMode = editor.state.cm.state.vim.insertMode;
+	static chordListener(cfg, evt){
+		const isInsertMode = cfg.editor.state.cm.state.vim.insertMode;
 		if (!isInsertMode) { // User needs to not be in insert mode for us to process keychords
 			if (evt.code === "Space") { //start capturing keychords beggining with a space keystroke
 				this.isKeyChordInProgress = true;
@@ -20,12 +20,17 @@ export default class ChordsObserver {
 				evt.stopPropagation();
 				evt.preventDefault();
 				this.chordsSoFar.push(evt.key);
-				let actionToTake = KeyChords[this.chordsSoFar.join('')];
+				const actionToTake = KeyChords[this.chordsSoFar.join('')];
 				if (!actionToTake) {
 					console.log(`No mapping found for ${this.chordsSoFar}`);
 				} else if (typeof actionToTake === 'string') {
 					console.log(`found action:${actionToTake}`);
 					this.resetChordState();
+					if (cfg.onChordComplete){
+						cfg.onChordComplete(actionToTake);
+					} else {
+						console.log('No handler found for ');
+					}
 				}
 			}
 			/**

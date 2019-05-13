@@ -14,7 +14,12 @@ $(() => {
 		keyboardHandler: "ace/keyboard/vim",
 		behavioursEnabled: true
 	});
-	ChordsObserver.init(editor);
+	ChordsObserver.init({
+		editor,
+		onChordComplete:(action)=>{
+			console.log(`action:${action}`);
+		}
+	});
 	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
 
 	window.load_file = function (content){
