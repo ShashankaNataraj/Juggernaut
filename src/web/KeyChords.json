@@ -1,3 +1,8 @@
 {
-  "fed": "Opening the config file now!"
+  "fed": "open-config-file",
+  "qqq": "quit",
+  "w/": "split-window-vertically",
+  "w-": "split-window-horizontally",
+  "]w": "move-to-next-window",
+  "[w": "move-to-previous-window"
 }
