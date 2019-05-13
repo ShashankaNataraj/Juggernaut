@@ -4,32 +4,18 @@ import "./styles/styles.scss";
 import Templates from "./TemplateMapping";
 import Keys from "./Keys";
 import RPC from "./RPC";
-
+import Prism from "prismjs";
+import "prismjs/themes/prism.css";
 $(() => {
-	let editor = ace.edit(document.querySelector('#editor'), {
-		mode: "ace/mode/html",
-		showPrintMargin:false,
-		theme:"ace/theme/gruvbox",
-		keyboardHandler:"ace/keyboard/vim",
-		behavioursEnabled:true
-	});
-	editor.container.addEventListener('keydown', function(a,b,c){
-		console.log(a);
-		console.log(b);
-		console.log(c);
-	}, true)
-	Keys.bindShortcuts(editor, {
-		'find-files-dialog':function(editor){
-			Swal.fire({
-				html:Templates.getTemplate('find-files-dialog',{}),
-				showConfirmButton:false
-			});
-		}
-	})
-	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
-	
-	window.load_file = function (content){
-		editor.setValue(content);
-		editor.gotoLine(0);
-	};
+	var html = Prism.highlight('console.log("asd")}', Prism.languages.javascript, 'javascript');
+	console.log(html);
+	document.getElementById('editor').innerHTML = html;
+	// hljs.initHighlightingOnLoad();
+	// RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
+	// document.querySelectorAll('pre code').forEach((block) => {
+	// 	hljs.highlightBlock(block);
+	// });
+	// window.load_file = function (content){
+	//
+	// };
 });
