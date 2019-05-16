@@ -4,5 +4,7 @@
   "w/": "split-window-vertically",
   "w-": "split-window-horizontally",
   "]w": "move-to-next-window",
-  "[w": "move-to-previous-window"
+  "[w": "move-to-previous-window",
+  "sav": "save-current-file",
+  "pff": "open-project-folder"
 }

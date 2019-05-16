@@ -6,6 +6,7 @@ import Keys from "./Keys";
 import RPC from "./RPC";
 import Constants from "./Constants";
 import ChordsObserver from "./ChordsObserver";
+
 $(() => {
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html",
@@ -16,8 +17,19 @@ $(() => {
 	});
 	ChordsObserver.init({
 		editor,
-		onChordComplete:(action)=>{
+		userKeyChords: { // TODO: At some point in future, accept user config
+			hwm: 'hello-world-message'
+		},
+		onChordComplete: (action) => {
 			console.log(`action:${action}`);
+			if (action === "save-current-file") {
+				RPC.writeFile({
+					file: '/Users/shasn/Code/Juggernaut/dist/index.html',
+					contents: editor.getValue()
+				});
+			}else if (action === 'open-project-folder'){
+				RPC.listFiles({path:"/Users/shasn/Code/*"})
+			}
 		}
 	});
 	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
@@ -26,4 +38,8 @@ $(() => {
 		editor.setValue(content);
 		editor.gotoLine(0);
 	};
+	window.listFiles = function(content){
+		console.log(content);
+
+	}
 });

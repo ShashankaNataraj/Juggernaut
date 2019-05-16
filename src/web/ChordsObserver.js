@@ -20,7 +20,8 @@ export default class ChordsObserver {
 				evt.stopPropagation();
 				evt.preventDefault();
 				this.chordsSoFar.push(evt.key);
-				const actionToTake = KeyChords[this.chordsSoFar.join('')];
+				const mergedChordConfig = {...KeyChords,...cfg.userKeyChords};
+				const actionToTake = mergedChordConfig[this.chordsSoFar.join('')];
 				if (!actionToTake) {
 					console.log(`No mapping found for ${this.chordsSoFar}`);
 				} else if (typeof actionToTake === 'string') {
