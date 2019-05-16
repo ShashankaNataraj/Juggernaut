@@ -1,13 +1,15 @@
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
-import "./styles/styles.scss";
+
 import Templates from "./TemplateMapping";
 import Keys from "./Keys";
 import RPC from "./RPC";
 import Constants from "./Constants";
 import ChordsObserver from "./ChordsObserver";
-
+import * as List from "list.js";
+import "./styles/styles.scss";
 $(() => {
+	console.log(List);
 	let editor = ace.edit(document.querySelector('#editor'), {
 		mode: "ace/mode/html",
 		showPrintMargin: false,
@@ -27,8 +29,8 @@ $(() => {
 					file: '/Users/shasn/Code/Juggernaut/dist/index.html',
 					contents: editor.getValue()
 				});
-			}else if (action === 'open-project-folder'){
-				RPC.listFiles({path:"/Users/shasn/Code/*"})
+			} else if (action === 'open-project-folder') {
+				RPC.listFiles({path: "/Users/shasn/Code/*"})
 			}
 		}
 	});
@@ -38,8 +40,15 @@ $(() => {
 		editor.setValue(content);
 		editor.gotoLine(0);
 	};
-	window.listFiles = function(content){
-		console.log(content);
+	window.listFiles = function (filesAndFolders){
+		const html = Templates.getTemplate('find-files-dialog',{
+			filesAndFolders
+		});
 
+		Swal.fire({
+			html,
+			showConfirmButton:false
+		});
+		console.log(html);
 	}
 });

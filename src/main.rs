@@ -22,7 +22,7 @@ pub enum Cmd {
     List { path: String },
 }
 
-#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct DiskEntry {
     path: String,
     is_dir: bool,
@@ -57,19 +57,16 @@ fn main() {
                     f.write_all(contents.as_bytes());
                 }
                 List { path } => {
-                    println!("here:{}", path.to_string());
                     let mut files_and_dirs: Vec<DiskEntry> = vec![];
                     for entry in glob(&path.to_string()).expect("Failed to read glob pattern") {
                         let entity_name = entry.unwrap();
                         let display_value = entity_name.display();
+                        let path = entry.path();
                         let md = metadata(display_value.to_string()).unwrap();
                         files_and_dirs.push(DiskEntry {
                             path: display_value.to_string(),
-                            is_dir: md.is_dir(),
+                            is_dir: md.is_dir()
                         });
-
-//                        println!("dir:{}", md.is_dir());
-//                        println!("asd:{}", &display_value);
                     }
                     let listing_json = serde_json::to_string(&files_and_dirs).unwrap();
                     let formatted_string = &format!("listFiles({})", listing_json);

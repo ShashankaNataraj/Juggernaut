@@ -1,10 +1,16 @@
 <div>
     <div class="find-files-container">
         <input type="text" placeholder="Search by file name"/>
-    </div>
-    <div class="recently-opened-files">
-        <br/>
-        Recently opened files
-        <hr/>
+        <div class="file-and-folder-listing">
+            {{#each filesAndFolders}}
+                {{#if is_dir}}
+                    <i class="fas fa-folder"></i>
+                    {{else}}
+                    <i class="fas fa-file"></i>
+                {{/if}}
+                <span>{{path}}</span>
+                <br/>
+            {{/each}}
+        </div>
     </div>
 </div>

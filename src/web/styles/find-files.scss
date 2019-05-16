@@ -1,13 +1,19 @@
-.find-files-container{
-  width:100%;
+.find-files-container {
+  width: 100%;
+
   input {
-    width:100%;
+    width: 100%;
+  }
+  .file-and-folder-listing {
+    text-align:left;
   }
 }
-.recently-opened-files{
-  text-align:left;
-  font-size:13px;
-  hr{
-    color:lightgray;
+
+.recently-opened-files {
+  text-align: left;
+  font-size: 13px;
+
+  hr {
+    color: lightgray;
   }
 }
