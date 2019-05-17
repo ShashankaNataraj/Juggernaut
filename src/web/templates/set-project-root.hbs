@@ -4,10 +4,13 @@
     <input type="text" class="search-by-folder-name" placeholder="Search by folder name"/>
         {{#each folders}}
             {{#if is_dir}}
-                <div class="folder-name">
-                    <i class="fas fa-folder"></i>&nbsp;{{name}}
+                <div class="folder-name" data-folder-name="{{name}}" data-folder-path="{{path}}">
+                    <a><i class="fas fa-folder"></i>&nbsp;{{name}}</a>
                 </div>
             {{/if}}
         {{/each}}
     </div>
+    <button class="btn-set-as-root">
+        Set as root
+    </button>
 </div>

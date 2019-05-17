@@ -1,5 +1,4 @@
 import * as $ from 'jquery';
-import Swal from 'sweetalert2';
 
 import Templates from "./TemplateMapping";
 import Keys from "./Keys";
@@ -18,7 +17,7 @@ $(() => {
 		theme: "ace/theme/gruvbox",
 		keyboardHandler: "ace/keyboard/vim",
 		behavioursEnabled: true
-	});
+	}), projectRoot = '/';
 	ChordsObserver.init({
 		editor,
 		userKeyChords: { // TODO: At some point in future, accept user config
@@ -31,7 +30,7 @@ $(() => {
 					contents: editor.getValue()
 				});
 			} else if (action === "set-project-root") {
-				RPC.listFiles({path: "/Users/shasn/Code/*", cb: "setProjectRoot"})
+				RPC.listFiles({path: projectRoot + '*', cb: "selectProjectRoot"})
 			} else if (action === 'open-project-folder') {
 				RPC.listFiles({path: "/Users/shasn/Code/**/Bl*", cb: "listFiles"})
 			}
@@ -39,8 +38,11 @@ $(() => {
 	});
 
 	const actionScope = {editor};
+
 	window.listFiles = Actions.listFiles.bind(actionScope);
-	window.setProjectRoot = Actions.setProjectRoot.bind(actionScope);
+	window.selectProjectRoot = Actions.selectProjectRoot.bind(actionScope, {
+		onSelectRoot: root => projectRoot = root
+	});
 	window.load_file = Actions.loadFile.bind(actionScope, editor);
 
 	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");

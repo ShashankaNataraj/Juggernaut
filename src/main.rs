@@ -73,7 +73,7 @@ fn main() {
                         });
                     }
                     let listing_json = serde_json::to_string(&files_and_dirs).unwrap();
-                    let formatted_string = &format!("{}({})", cb, listing_json);
+                    let formatted_string = &format!("{}({},'{}')", cb, listing_json, path.to_string());
                     println!("{}",formatted_string);
                     _webview.eval(formatted_string);
                 }

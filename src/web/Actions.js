@@ -1,20 +1,36 @@
 import Templates from "./TemplateMapping";
 import Swal from "sweetalert2";
 import * as $ from "jquery";
+import RPC from "./RPC";
 
 export default class Actions {
-	static setProjectRoot(folders){
+	static selectProjectRoot(cfg, folders, currentPath){
 		const html = Templates.getTemplate('set-project-root', {
 			folders
 		});
 		Swal.fire({
 			html,
 			showConfirmButton: false,
-			onOpen: function (){
+			onOpen: () => {
 				$('.search-by-folder-name')
-					.on('keydown', () => {
-						console.log(1);
+					.on('keyup', (evt) => {
+						console.log(evt.currentTarget.value);
+					});
+				$('.folder-list > .folder-name')
+					.on('click', (evt) => {
+						const targetNode = $(evt.currentTarget),
+							folderName = targetNode.data('folder-name'),
+							path = targetNode.data('folder-path') + "/*";
+						RPC.listFiles({path, cb: "selectProjectRoot"})
+					});
+				$('.set-project-root > .btn-set-as-root')
+					.on('click', (evt) => {
+						cfg.onSelectRoot(currentPath);
+						Swal.close();
 					})
+			},
+			onClose: () => {
+
 			}
 		})
 	}
