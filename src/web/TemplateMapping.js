@@ -1,6 +1,8 @@
 import findFilesDialog from "./templates/find-files-dialog.hbs";
+import setProjectRoot from "./templates/set-project-root.hbs";
 const mapping = {
-	"find-files-dialog": findFilesDialog
+	"find-files-dialog": findFilesDialog,
+	"set-project-root": setProjectRoot
 };
 export default class TemplateMapping{
 	static getTemplate(key, values){

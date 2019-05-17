@@ -8,6 +8,8 @@ import Constants from "./Constants";
 import ChordsObserver from "./ChordsObserver";
 import * as List from "list.js";
 import "./styles/styles.scss";
+import Actions from "./Actions";
+
 $(() => {
 	console.log(List);
 	let editor = ace.edit(document.querySelector('#editor'), {
@@ -23,32 +25,23 @@ $(() => {
 			hwm: 'hello-world-message'
 		},
 		onChordComplete: (action) => {
-			console.log(`action:${action}`);
 			if (action === "save-current-file") {
 				RPC.writeFile({
 					file: '/Users/shasn/Code/Juggernaut/dist/index.html',
 					contents: editor.getValue()
 				});
+			} else if (action === "set-project-root") {
+				RPC.listFiles({path: "/Users/shasn/Code/*", cb: "setProjectRoot"})
 			} else if (action === 'open-project-folder') {
-				RPC.listFiles({path: "/Users/shasn/Code/*"})
+				RPC.listFiles({path: "/Users/shasn/Code/**/Bl*", cb: "listFiles"})
 			}
 		}
 	});
+
+	const actionScope = {editor};
+	window.listFiles = Actions.listFiles.bind(actionScope);
+	window.setProjectRoot = Actions.setProjectRoot.bind(actionScope);
+	window.load_file = Actions.loadFile.bind(actionScope, editor);
+
 	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
-
-	window.load_file = function (content){
-		editor.setValue(content);
-		editor.gotoLine(0);
-	};
-	window.listFiles = function (filesAndFolders){
-		const html = Templates.getTemplate('find-files-dialog',{
-			filesAndFolders
-		});
-
-		Swal.fire({
-			html,
-			showConfirmButton:false
-		});
-		console.log(html);
-	}
 });

@@ -19,13 +19,14 @@ pub enum Cmd {
     Init,
     Read { file: String },
     Write { file: String, contents: String },
-    List { path: String },
+    List { path: String, cb: String },
 }
 
 #[derive(Serialize)]
 pub struct DiskEntry {
     path: String,
     is_dir: bool,
+    name: String
 }
 
 fn main() {
@@ -56,20 +57,24 @@ fn main() {
                     let mut f = File::create(file).unwrap(); // Panics (see the docs) if create failed.
                     f.write_all(contents.as_bytes());
                 }
-                List { path } => {
+                List { path, cb } => {
+
                     let mut files_and_dirs: Vec<DiskEntry> = vec![];
                     for entry in glob(&path.to_string()).expect("Failed to read glob pattern") {
                         let entity_name = entry.unwrap();
                         let display_value = entity_name.display();
-                        let path = entry.path();
                         let md = metadata(display_value.to_string()).unwrap();
+                        let path = display_value.to_string();
+                        let path_collect: Vec<&str> = path.split("/").collect();
                         files_and_dirs.push(DiskEntry {
-                            path: display_value.to_string(),
-                            is_dir: md.is_dir()
+                            path:display_value.to_string(),
+                            is_dir: md.is_dir(),
+                            name: path_collect[path_collect.len()-1].to_string()
                         });
                     }
                     let listing_json = serde_json::to_string(&files_and_dirs).unwrap();
-                    let formatted_string = &format!("listFiles({})", listing_json);
+                    let formatted_string = &format!("{}({})", cb, listing_json);
+                    println!("{}",formatted_string);
                     _webview.eval(formatted_string);
                 }
             }

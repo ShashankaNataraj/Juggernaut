@@ -1,0 +1,13 @@
+<div class="set-project-root">
+    <div>Set Project Root</div>
+    <div class="folder-list">
+    <input type="text" class="search-by-folder-name" placeholder="Search by folder name"/>
+        {{#each folders}}
+            {{#if is_dir}}
+                <div class="folder-name">
+                    <i class="fas fa-folder"></i>&nbsp;{{name}}
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
