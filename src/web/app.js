@@ -12,7 +12,6 @@ import Actions from "./Actions";
 $(() => {
 	console.log(List);
 	let editor = ace.edit(document.querySelector('#editor'), {
-		mode: "ace/mode/html",
 		showPrintMargin: false,
 		theme: "ace/theme/gruvbox",
 		keyboardHandler: "ace/keyboard/vim",
@@ -25,10 +24,7 @@ $(() => {
 		},
 		onChordComplete: (action) => {
 			if (action === "save-current-file") {
-				RPC.writeFile({
-					file: '/Users/shasn/Code/Juggernaut/dist/index.html',
-					contents: editor.getValue()
-				});
+				Actions.writeFile(action, editor);
 			} else if (action === "set-project-root") {
 				console.log(projectRoot);
 				RPC.listFiles({path: projectRoot, cb: "selectProjectRoot"})

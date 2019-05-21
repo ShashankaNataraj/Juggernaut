@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 import * as $ from "jquery";
 import RPC from "./RPC";
 
+let currentlyOpenedFilePath;
+
 export default class Actions {
 	static selectProjectRoot(cfg, folders, currentPath){
 		const html = Templates.getTemplate('set-project-root', {
@@ -54,7 +56,15 @@ export default class Actions {
 		});
 	}
 
+	static writeFile(action, editor) {
+		RPC.writeFile({
+			file: currentlyOpenedFilePath,
+			contents: editor.getValue()
+		});
+	}
+
 	static loadFile(editor, content, path){
+		currentlyOpenedFilePath = path;
 		const modeToFileMapping = {
 			'js': 'ace/mode/javascript',
 			'html': 'ace/mode/html',
