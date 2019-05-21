@@ -48,6 +48,4 @@ $(() => {
 		}
 	});
 	window.load_file = Actions.loadFile.bind(actionScope, editor);
-
-	RPC.readFile("/Users/shasn/Code/Juggernaut/dist/index.html");
 });

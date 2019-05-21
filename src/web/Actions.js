@@ -21,7 +21,7 @@ export default class Actions {
 						const targetNode = $(evt.currentTarget),
 							folderName = targetNode.data('folder-name'),
 							path = targetNode.data('folder-path') + "/";
-						RPC.listFiles({path, cb: "selectProjectRoot"})
+						RPC.listFiles({path, cb: "selectProjectRoot"});
 					});
 				$('.set-project-root > .btn-set-as-root')
 					.on('click', (evt) => {
@@ -42,7 +42,15 @@ export default class Actions {
 		});
 		Swal.fire({
 			html,
-			showConfirmButton: false
+			showConfirmButton: false,
+			onOpen: () => {
+				$('.file-and-folder-listing > .entry')
+					.on('click', (evt) => {
+						const target = $(evt.currentTarget);
+						RPC.readFile(target.data('path'));
+						Swal.close();
+					})
+			}
 		});
 	}
 

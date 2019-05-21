@@ -1,11 +1,13 @@
 .find-files-container {
   width: 100%;
-
   input {
     width: 100%;
   }
   .file-and-folder-listing {
     text-align:left;
+    .entry{
+      cursor:pointer;
+    }
   }
 }
 
