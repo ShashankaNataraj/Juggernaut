@@ -3,14 +3,13 @@
         <input type="text" placeholder="Search by file name"/>
         <div class="file-and-folder-listing">
             {{#each filesAndFolders}}
-                <div class="entry" data-path="{{path}}">
                     {{#if is_dir}}
-                        <i class="fas fa-folder"></i>
-                        {{else}}
-                        <i class="fas fa-file"></i>
-                    {{/if}}{{name}}
-                    <br/>
-                </div>
+
+                    {{else}}
+                        <div class="entry" data-path="{{path}}">
+                            <i class="fas fa-file"></i>{{name}}
+                        </div>
+                    {{/if}}
             {{/each}}
         </div>
     </div>

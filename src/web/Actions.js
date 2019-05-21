@@ -54,8 +54,22 @@ export default class Actions {
 		});
 	}
 
-	static loadFile(editor, content){
+	static loadFile(editor, content, path){
+		const modeToFileMapping = {
+			'js': 'ace/mode/javascript',
+			'html': 'ace/mode/html',
+			'hbs': 'ace/mode/handlebars',
+			'md': 'ace/mode/markdown',
+			'toml': 'ace/mode/toml',
+			'json': 'ace/mode/json',
+			'scss': 'ace/mode/scss'
+		};
+		let pathSplit = path.split('.');
+		let extension = pathSplit[pathSplit.length - 1];
+		let mode = modeToFileMapping[extension];
 		editor.setValue(content);
+		editor.session.setMode(mode);
+		console.log(mode);
 		editor.gotoLine(0);
 	}
 }

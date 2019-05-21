@@ -45,14 +45,16 @@ fn main() {
             match serde_json::from_str(arg).unwrap() {
                 Init => (),
                 Read { file } => {
+                    let path = file.clone();
                     let mut file = File::open(file)
                         .expect("Unable to open the file");
                     let mut contents = String::new();
                     file.read_to_string(&mut contents)
                         .expect("Unable to read the file");
 
-                    let formatted_string = &format!("load_file({})",
-                                                    serde_json::to_string(&contents).unwrap()
+                    let formatted_string = &format!("load_file({},'{}')",
+                                                    serde_json::to_string(&contents).unwrap(),
+                                                    path
                     );
                     _webview.eval(formatted_string);
                 }
