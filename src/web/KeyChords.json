@@ -6,6 +6,6 @@
   "]w": "move-to-next-window",
   "[w": "move-to-previous-window",
   "sav": "save-current-file",
-  "pff": "open-project-folder",
+  "pff": "open-project-file",
   "pfp": "set-project-root"
 }

@@ -20,7 +20,7 @@ export default class Actions {
 					.on('click', (evt) => {
 						const targetNode = $(evt.currentTarget),
 							folderName = targetNode.data('folder-name'),
-							path = targetNode.data('folder-path') + "/*";
+							path = targetNode.data('folder-path') + "/";
 						RPC.listFiles({path, cb: "selectProjectRoot"})
 					});
 				$('.set-project-root > .btn-set-as-root')
@@ -36,6 +36,7 @@ export default class Actions {
 	}
 
 	static listFiles(filesAndFolders){
+		console.log('listed files');
 		const html = Templates.getTemplate('find-files-dialog', {
 			filesAndFolders
 		});

@@ -17,7 +17,7 @@ $(() => {
 		theme: "ace/theme/gruvbox",
 		keyboardHandler: "ace/keyboard/vim",
 		behavioursEnabled: true
-	}), projectRoot = '/';
+	}), projectRoot = '/Users/shasn/Code/Juggernaut';
 	ChordsObserver.init({
 		editor,
 		userKeyChords: { // TODO: At some point in future, accept user config
@@ -30,18 +30,22 @@ $(() => {
 					contents: editor.getValue()
 				});
 			} else if (action === "set-project-root") {
-				RPC.listFiles({path: projectRoot + '*', cb: "selectProjectRoot"})
-			} else if (action === 'open-project-folder') {
-				RPC.listFiles({path: "/Users/shasn/Code/**/Bl*", cb: "listFiles"})
+				console.log(projectRoot);
+				RPC.listFiles({path: projectRoot, cb: "selectProjectRoot"})
+			} else if (action === 'open-project-file') {
+				let commandObj = {path: `${projectRoot}`, cb: "listFiles"};
+				RPC.listFiles({path: `${projectRoot}`, cb: "listFiles"})
 			}
 		}
 	});
 
 	const actionScope = {editor};
-
 	window.listFiles = Actions.listFiles.bind(actionScope);
 	window.selectProjectRoot = Actions.selectProjectRoot.bind(actionScope, {
-		onSelectRoot: root => projectRoot = root
+		onSelectRoot: root => {
+			projectRoot = root;
+			console.log('Setting project root to:' + projectRoot);
+		}
 	});
 	window.load_file = Actions.loadFile.bind(actionScope, editor);
 
