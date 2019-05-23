@@ -1,4 +1,4 @@
-![](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ad89a57d-2156-49ad-a13f-7f635974deb3/dajh9gf-2a710721-7f88-41c3-b3ec-b815e80af82c.png/v1/fill/w_941,h_849,strp/juggernaut_dota_2_by_migfleet_dajh9gf-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMzOCIsInBhdGgiOiJcL2ZcL2FkODlhNTdkLTIxNTYtNDlhZC1hMTNmLTdmNjM1OTc0ZGViM1wvZGFqaDlnZi0yYTcxMDcyMS03Zjg4LTQxYzMtYjNlYy1iODE1ZTgwYWY4MmMucG5nIiwid2lkdGgiOiI8PTM3MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.svIeBAix7AzCtnQIDU_ug_ttF2g-7P6DMEI2JoWq3N4=50x20)
+![](https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Mask_Juggernaut-512.png)
 
 ## Yet another text editor?
 I've used emacs(with and without spacemacs), Vim, WebStorm, and everything in between. I keep coming back to webstorm and vim due to 1 reason: The features webstorm provides are amazing. But WebStorm is a resource hog. Vim is a light saber, and excels at fast editing. Plugins do bog vim down in terms of speed.
