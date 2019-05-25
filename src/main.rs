@@ -3,11 +3,13 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate glob;
 extern crate web_view;
+extern crate dirs;
 
 //extern crate ripgrep;
 use ignore::Walk;
 
 use std::fs::metadata;
+use std::fs;
 
 
 use web_view::*;
@@ -22,7 +24,8 @@ pub enum Cmd {
     Init,
     Read { file: String },
     Write { file: String, contents: String },
-    List { path: String, cb: String },
+    List { path: String, cb: String},
+    ListDirs { cb: String, home:bool, path:String },
 }
 
 #[derive(Serialize)]
@@ -30,6 +33,50 @@ pub struct DiskEntry {
     path: String,
     is_dir: bool,
     name: String,
+}
+
+fn walk_dir(path_copy:String) -> String{
+    println!("Trying to walk: {}", path_copy.as_str());
+    let mut files_and_dirs: Vec<DiskEntry> = vec![];
+    for result in Walk::new(path_copy) {
+        // Each item yielded by the iterator is either a directory entry or an
+        // error, so either print the path or the error.
+        match result {
+            Ok(entry) => {
+                let display_value = entry.path().display();
+                let md = metadata(display_value.to_string()).unwrap();
+                let path = display_value.to_string();
+                let path_collect: Vec<&str> = path.split("/").collect();
+                files_and_dirs.push(DiskEntry {
+                    path: display_value.to_string(),
+                    is_dir: md.is_dir(),
+                    name: path_collect[path_collect.len() - 1].to_string(),
+                });
+            }
+            Err(err) => println!("ERROR: {}", err),
+        }
+    }
+    return serde_json::to_string(&files_and_dirs).unwrap();
+}
+
+fn list_dir_contents(dir_path:&String) -> String{
+    let mut dirs: Vec<DiskEntry> = vec![];
+    let paths = fs::read_dir(dir_path).unwrap();
+    for path in paths {
+        let dir_path = path.unwrap().path();
+        let dir_name = dir_path.display();
+        dirs.push(DiskEntry {
+            path: format!("{}",dir_name),
+            is_dir: true,
+            name: dir_name.to_string(),
+        });
+    }
+    return serde_json::to_string(&dirs).unwrap();
+}
+
+fn format_rpc_callback(cb:String, listing_json:String, path_copy:String) -> String{
+    let formatted_string = &format!("{}({},'{}')", cb, listing_json, path_copy.clone());
+    return formatted_string.to_string();
 }
 
 fn main() {
@@ -59,35 +106,32 @@ fn main() {
                     _webview.eval(formatted_string);
                 }
                 Write { file, contents } => {
-                    let mut f = File::create(file).unwrap(); // Panics (see the docs) if create failed.
+                    let mut f = File::create(file).unwrap();
                     f.write_all(contents.as_bytes());
                 }
-                List { path, cb } => {
-                    println!("Path received:{}", path);
-                    let path_copy = &path.clone();
-                    let mut files_and_dirs: Vec<DiskEntry> = vec![];
-                    for result in Walk::new(path_copy) {
-                        // Each item yielded by the iterator is either a directory entry or an
-                        // error, so either print the path or the error.
-                        match result {
-                            Ok(entry) => {
-                                let display_value = entry.path().display();
-                                let md = metadata(display_value.to_string()).unwrap();
-                                let path = display_value.to_string();
-                                let path_collect: Vec<&str> = path.split("/").collect();
-                                files_and_dirs.push(DiskEntry {
-                                    path: display_value.to_string(),
-                                    is_dir: md.is_dir(),
-                                    name: path_collect[path_collect.len() - 1].to_string(),
-                                });
-                            }
-                            Err(err) => println!("ERROR: {}", err),
-                        }
+                ListDirs{cb, home, path} => {
+                    if home == true {
+                        println!("Listing Home!");
+                        let path_buf_home_dir = dirs::home_dir();
+                        let path_buf_unwrap = path_buf_home_dir.unwrap(); // TODO: Find a better way of writing this!
+                        let default_dir_path = format!("{}/",path_buf_unwrap.to_str().unwrap());
+                        let json_dir_listing:String = list_dir_contents(&default_dir_path);
+                        let eval_string = format_rpc_callback(cb, json_dir_listing, default_dir_path);
+                        _webview.eval(eval_string.as_str());
+                    } else {
+                        println!("Listing {}!", path);
+                        let dir_path = format!("{}",path);
+                        let json_dir_listing:String = list_dir_contents(&dir_path);
+                        let eval_string = format_rpc_callback(cb, json_dir_listing, dir_path);
+                        _webview.eval(eval_string.as_str());
                     }
-                    let listing_json = serde_json::to_string(&files_and_dirs).unwrap();
-                    let formatted_string = &format!("{}({},'{}')", cb, listing_json, path_copy.clone());
-                    println!("{}",formatted_string);
-                    _webview.eval(formatted_string);
+                    
+                }
+                List { path, cb } => {
+                    let path_copy = &path.clone();
+                    let listing_json = walk_dir(path_copy.to_string());
+                    let formatted_string = format_rpc_callback(cb, listing_json, path_copy.to_string());
+                    _webview.eval(formatted_string.as_str());
                 }
             }
             Ok(())

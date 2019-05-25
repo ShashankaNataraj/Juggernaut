@@ -16,7 +16,7 @@ $(() => {
 		theme: "ace/theme/gruvbox",
 		keyboardHandler: "ace/keyboard/vim",
 		behavioursEnabled: true
-	}), projectRoot = '/Users/shasn/Code/Juggernaut';
+	}), projectRoot = '~/';
 	ChordsObserver.init({
 		editor,
 		userKeyChords: { // TODO: At some point in future, accept user config
@@ -26,11 +26,10 @@ $(() => {
 			if (action === "save-current-file") {
 				Actions.writeFile(action, editor);
 			} else if (action === "set-project-root") {
-				console.log(projectRoot);
-				RPC.listFiles({path: projectRoot, cb: "selectProjectRoot"})
+				RPC.listDirs({cb: "selectProjectRoot", home:true});
 			} else if (action === 'open-project-file') {
 				let commandObj = {path: `${projectRoot}`, cb: "listFiles"};
-				RPC.listFiles({path: `${projectRoot}`, cb: "listFiles"})
+				RPC.listFiles({path: `${projectRoot}`, cb: "listFiles"});
 			}
 		}
 	});

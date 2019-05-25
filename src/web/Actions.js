@@ -10,6 +10,7 @@ export default class Actions {
 		const html = Templates.getTemplate('set-project-root', {
 			folders
 		});
+		console.log(folders);
 		Swal.fire({
 			html,
 			showConfirmButton: false,
@@ -23,7 +24,7 @@ export default class Actions {
 						const targetNode = $(evt.currentTarget),
 							folderName = targetNode.data('folder-name'),
 							path = targetNode.data('folder-path') + "/";
-						RPC.listFiles({path, cb: "selectProjectRoot"});
+						RPC.listDirs({path, cb: "selectProjectRoot"});
 					});
 				$('.set-project-root > .btn-set-as-root')
 					.on('click', (evt) => {

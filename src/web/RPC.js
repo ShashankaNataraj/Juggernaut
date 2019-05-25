@@ -12,6 +12,18 @@ export default class RPC {
 	}
 
 	static listFiles(cfg){
-		this.invoke({cmd:"list", path:cfg.path, cb:cfg.cb})
+		cfg.cmd = cfg.cmd || 'list';
+		this.invoke(cfg);
+	}
+	static listDirs(cfg){
+		cfg.cmd = cfg.cmd || 'listDirs';
+		cfg.home = cfg.home || false;
+		cfg.path = cfg.path || '';
+		this.invoke(cfg);
+	}
+
+	static listHomeFiles(cfg){
+		cfg.cmd = cfg.cmd || 'listHome';
+		this.invoke(cfg);
 	}
 }
