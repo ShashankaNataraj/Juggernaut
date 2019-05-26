@@ -11,6 +11,8 @@ use ignore::Walk;
 use std::fs::metadata;
 use std::fs;
 
+mod utils;
+use utils::get_dir_name_from_path;
 
 use web_view::*;
 use std::io::prelude::*;
@@ -46,11 +48,10 @@ fn walk_dir(path_copy:String) -> String{
                 let display_value = entry.path().display();
                 let md = metadata(display_value.to_string()).unwrap();
                 let path = display_value.to_string();
-                let path_collect: Vec<&str> = path.split("/").collect();
                 files_and_dirs.push(DiskEntry {
                     path: display_value.to_string(),
                     is_dir: md.is_dir(),
-                    name: path_collect[path_collect.len() - 1].to_string(),
+                    name: get_dir_name_from_path(path)
                 });
             }
             Err(err) => println!("ERROR: {}", err),
@@ -68,14 +69,14 @@ fn list_dir_contents(dir_path:&String) -> String{
         dirs.push(DiskEntry {
             path: format!("{}",dir_name),
             is_dir: true,
-            name: dir_name.to_string(),
+            name: get_dir_name_from_path(dir_name.to_string())
         });
     }
     return serde_json::to_string(&dirs).unwrap();
 }
 
-fn format_rpc_callback(cb:String, listing_json:String, path_copy:String) -> String{
-    let formatted_string = &format!("{}({},'{}')", cb, listing_json, path_copy.clone());
+fn format_rpc_callback(cb:String, listing_json:String, path:String) -> String{
+    let formatted_string = &format!("{}({},'{}')", cb, listing_json, path.clone());
     return formatted_string.to_string();
 }
 

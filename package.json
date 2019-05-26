@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "bundle": "webpack",
-    "watch-webpack": "webpack --watch",
-    "watch-rust": "cargo watch -x run"
+    "release": "webpack && cargo --release",
+    "watch-js": "webpack --watch",
+    "watch-rs": "cargo watch -x run",
+    "test-rust": "cargo test",
+    "test-js": "jest",
+    "test": "npm run test-rust && npm run test-js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +22,7 @@
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
+    "jest": "^24.8.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "script-ext-html-webpack-plugin": "^2.1.3",

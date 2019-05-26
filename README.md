@@ -31,9 +31,9 @@ There are many editors out there, but this one is mine. And, I can learn Rust wh
 - 0 telemetry: No compromises. Store any config on the users own machine, dont send any network requests without the user knowing about it. Binaries produced during releases should be the same if the user tries to build it on his own. i.e, no sleight of hand w.r.t the build and release process like VSCode.
 
 ## Hack with me
-Run `npm run watch-rust` to allow cargo to watch for changes and live reload
+Run `npm run watch-rs` to allow cargo to watch for changes and live reload
 
-Run `npm run watch-webpack` to allow webpack to look for UI changes and live reload
+Run `npm run watch-js` to allow webpack to look for UI changes and live reload
 
 ## Contributions
 
