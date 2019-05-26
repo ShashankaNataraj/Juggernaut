@@ -28,7 +28,8 @@ There are many editors out there, but this one is mine. And, I can learn Rust wh
 - Aesthetically pleasing
 - Predictable & stable
 - Spacemacs style keychords
-- 0 telemetry: No compromises. Store any config on the users own machine, dont send any network requests without the user knowing about it. Binaries produced during releases should be the same if the user tries to build it on his own. i.e, no sleight of hand w.r.t the build and release process like VSCode.
+- 0 telemetry: No compromises! Store any config on the users own machine, dont send any network requests without the user knowing about it. Binaries produced during releases should be the same if the user tries to build it on his own. i.e, no sleight of hand w.r.t the build and release process like VSCode.
+- Use the systems native browser runtimes instead of packaging a runtime with the release binary
 
 ## Hack with me
 Run `npm run watch-rs` to allow cargo to watch for changes and live reload
@@ -36,12 +37,15 @@ Run `npm run watch-rs` to allow cargo to watch for changes and live reload
 Run `npm run watch-js` to allow webpack to look for UI changes and live reload
 
 ## Contributions
-
 PR's are welcome. Just try not to break anything, even if you do, thats ok, Lets build something good together! :smile:
 
 ### Where do you need help?
-
-Right now, Im trying to get all the basics right. File reading was just implemented. Everything is in alpha.
+Right now, Im trying to get all the basics right. Take a look at the project tracker if you're so inclined: https://github.com/ShashankaNataraj/Juggernaut/projects
 
 ## But.. But.. electron is bloated®
 That is exactly why this project uses https://github.com/Boscop/web-view xD
+The idea is to not distribute a browsers runtime along with the binary, but to use what system level browser runtimes are already available. That way, power consumption and performance are guaranteed to be better than the bundled binary.
+This leads to some problems:
+1. Native window dialogs are no longer accessible because web browsers are built to not expose file paths and directory structures to websites
+2. Actions like drag and drop are no longer available because of the same reasons as the above point. Drag and drops while possible, will not yield the file path
+
