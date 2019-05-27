@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "release": "webpack && cargo --release",
+    "release": "npm install && webpack && cargo build --release",
     "watch-js": "webpack --watch",
     "watch-rs": "cargo watch -x run",
     "test-rust": "cargo test",
@@ -14,9 +14,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.5",
+    "babel-preset-es2015": "^6.24.1",
     "css-loader": "^2.1.1",
     "html-loader": "^0.5.5",
     "html-webpack-inline-source-plugin": "0.0.10",
