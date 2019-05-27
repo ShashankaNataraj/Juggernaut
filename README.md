@@ -20,7 +20,7 @@ While VSCode fits everything Im trying to do and is an engineering marvel:
 While some / all of these can be fixed with plugins / using different forks of VSCode, one question arises: Why bother? Why not build my own editor from the ground up instead of complaining about VSCode or webstorm or Vim?
 
 ## Why even compete with established editors out there?
-There are many editors out there, but this one is mine. And, I can learn Rust when implementing it ^_^
+There are many editors out there, but this one is mine. And, I can learn Rust when implementing it :sunglasses:
 
 ## Objectives in order of priority
 - Fast & Lightweight: Do a few things, do them well. Do not try to compete with VSCode and Webstorm. Borrow only what makes the most sense productivity - wise.
@@ -31,9 +31,12 @@ There are many editors out there, but this one is mine. And, I can learn Rust wh
 - 0 telemetry: No compromises! Store any config on the users own machine, dont send any network requests without the user knowing about it. Binaries produced during releases should be the same if the user tries to build it on his own. i.e, no sleight of hand w.r.t the build and release process like VSCode.
 - Use the systems native browser runtimes instead of packaging a runtime with the release binary
 
+## Build from source
+You will need nodejs & npm to be installed before proceeding further.
+Run `npm run release` to install dependencies, and build the JS and Rust code into one binary. The built binary will be in `target/release`.
+
 ## Hack with me
 Run `npm run watch-rs` to allow cargo to watch for changes and live reload
-
 Run `npm run watch-js` to allow webpack to look for UI changes and live reload
 
 ## Contributions
@@ -43,9 +46,8 @@ PR's are welcome. Just try not to break anything, even if you do, thats ok, Lets
 Right now, Im trying to get all the basics right. Take a look at the project tracker if you're so inclined: https://github.com/ShashankaNataraj/Juggernaut/projects
 
 ## But.. But.. electron is bloated®
-That is exactly why this project uses https://github.com/Boscop/web-view xD
+That is exactly why this project uses https://github.com/Boscop/web-view :laughing:
 The idea is to not distribute a browsers runtime along with the binary, but to use what system level browser runtimes are already available. That way, power consumption and performance are guaranteed to be better than the bundled binary.
 This leads to some problems:
 1. Native window dialogs are no longer accessible because web browsers are built to not expose file paths and directory structures to websites
 2. Actions like drag and drop are no longer available because of the same reasons as the above point. Drag and drops while possible, will not yield the file path
-
