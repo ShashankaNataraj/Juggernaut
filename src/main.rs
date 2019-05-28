@@ -10,7 +10,8 @@ use std::fs::File;
 use std::io::Write;
 use glob::glob;
 
-mod disk;
+mod dir;
+mod file;
 
 #[derive(Deserialize)]
 #[serde(tag = "cmd", rename_all = "camelCase")]
@@ -41,17 +42,10 @@ fn main() {
                 Init => (),
                 Read { file } => {
                     let path = file.clone();
-                    let mut file = File::open(file)
-                        .expect("Unable to open the file");
-                    let mut contents = String::new();
-                    file.read_to_string(&mut contents)
-                        .expect("Unable to read the file");
-
-                    let formatted_string = &format!("load_file({},'{}')",
-                                                    serde_json::to_string(&contents).unwrap(),
-                                                    path
-                    );
-                    _webview.eval(formatted_string);
+                    let contents = file::read_file(file);
+                    let cb = "load_file".to_string();
+                    let formatted_string = format_rpc_callback(cb, contents, path);
+                    _webview.eval(&formatted_string);
                 }
                 Write { file, contents } => {
                     let mut f = File::create(file).unwrap();
@@ -60,24 +54,23 @@ fn main() {
                 ListDirs{cb, home, path} => {
                     if home == true {
                         println!("Listing Home!");
-                        let path_buf_home_dir = dirs::home_dir();
+                        let mut path_buf_home_dir = dirs::home_dir();
                         let path_buf_home_dir = path_buf_home_dir.unwrap();
                         let default_dir_path = format!("{}/",path_buf_home_dir.to_str().unwrap());
-                        let json_dir_listing:String = disk::list_dir_contents(&default_dir_path);
+                        let json_dir_listing:String = dir::list_dir_contents(&default_dir_path);
                         let eval_string = format_rpc_callback(cb, json_dir_listing, default_dir_path);
                         _webview.eval(eval_string.as_str());
                     } else {
-                        println!("Listing {}!", path);
+                        println!("Listing {}", path);
                         let dir_path = format!("{}",path);
-                        let json_dir_listing:String = disk::list_dir_contents(&dir_path);
+                        let json_dir_listing:String = dir::list_dir_contents(&dir_path);
                         let eval_string = format_rpc_callback(cb, json_dir_listing, dir_path);
                         _webview.eval(eval_string.as_str());
                     }
-                    
                 }
                 List { path, cb } => {
                     let path_copy = &path.clone();
-                    let listing_json = disk::walk_dir(path_copy.to_string());
+                    let listing_json = dir::walk_dir(path_copy.to_string());
                     let formatted_string = format_rpc_callback(cb, listing_json, path_copy.to_string());
                     _webview.eval(formatted_string.as_str());
                 }
