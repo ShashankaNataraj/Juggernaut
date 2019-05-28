@@ -61,8 +61,8 @@ fn main() {
                     if home == true {
                         println!("Listing Home!");
                         let path_buf_home_dir = dirs::home_dir();
-                        let path_buf_unwrap = path_buf_home_dir.unwrap(); // TODO: Find a better way of writing this!
-                        let default_dir_path = format!("{}/",path_buf_unwrap.to_str().unwrap());
+                        let path_buf_home_dir = path_buf_home_dir.unwrap();
+                        let default_dir_path = format!("{}/",path_buf_home_dir.to_str().unwrap());
                         let json_dir_listing:String = disk::list_dir_contents(&default_dir_path);
                         let eval_string = format_rpc_callback(cb, json_dir_listing, default_dir_path);
                         _webview.eval(eval_string.as_str());
