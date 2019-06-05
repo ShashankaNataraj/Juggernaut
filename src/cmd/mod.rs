@@ -6,5 +6,6 @@ pub enum Cmd {
     Write { file: String, contents: String },
     List { path: String, cb: String},
     ListDirs { cb: String, home:bool, path:String },
-    SetHome {cb:String, path:String}
+    SetHome {cb:String, path:String},
+    GetUserConfig{cb:String}
 }

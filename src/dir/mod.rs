@@ -7,6 +7,9 @@ extern crate dirs;
 use fs::File;
 use std::io::Write;
 use std::path::Path;
+use std::path::PathBuf;
+
+use crate::file;
 
 #[derive(Serialize)]
 pub struct DiskEntry {
@@ -65,15 +68,23 @@ pub fn list_dir_contents(dir_path:&String) -> String{
     }
     return serde_json::to_string(&dirs).unwrap();
 }
-
-
-pub fn create_home_config(){
+pub fn get_user_config_file() -> PathBuf{
     let home_dir = dirs::home_dir();
     let mut config_file = home_dir.unwrap();
     config_file.push(".juggernautrc");
+    return config_file;
+}
+
+pub fn does_config_exist(config_file:&PathBuf) -> bool {
     let config_exists = Path::new(&config_file.display().to_string()).exists();
+    return config_exists;
+}
+
+pub fn create_home_config(){
+    let config_file = get_user_config_file();
+    let config_exists = does_config_exist(&config_file);
     if config_exists == false {
-        println!("Didnt find config, creating the config file at: {}", config_file.display());
+        println!("Didn't find config, creating the config file at: {}", config_file.display());
         let mut config_file = File::create(config_file).unwrap();
         config_file.write_all(b"{}");
     } else {
@@ -83,4 +94,16 @@ pub fn create_home_config(){
 }
 pub fn set_home_dir(){
 
+}
+
+pub fn read_user_config() -> String{
+    let config_file = get_user_config_file();
+    let config_exists = does_config_exist(&config_file);
+    if config_exists == true {
+        let config_file = config_file.display();
+        let config_file = file::read_file(config_file.to_string());
+        return config_file;
+    } else {
+        return "{}".to_string();
+    }
 }

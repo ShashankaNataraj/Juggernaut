@@ -62,6 +62,11 @@ fn main() {
                 SetHome{path, cb} => {
 //                    dir::set_home_dir();
 //                    let formatted_string = rpc::format_callback(cb, "".to_string(), "".to_string());
+                },
+                GetUserConfig{cb} => {
+                    let cfg_file_contents = dir::read_user_config();
+                    let formatted_string = rpc::format_callback(cb, cfg_file_contents, "".to_string());
+                    _webview.eval(&formatted_string);
                 }
             }
             Ok(())

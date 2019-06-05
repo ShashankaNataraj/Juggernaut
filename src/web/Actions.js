@@ -74,4 +74,7 @@ export default class Actions {
 		console.log(mode);
 		editor.gotoLine(0);
 	}
+	static parseUserConfig(editor, userConfig){
+		console.log(userConfig);
+	}
 }

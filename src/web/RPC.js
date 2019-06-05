@@ -26,4 +26,9 @@ export default class RPC {
 		cfg.cmd = cfg.cmd || 'listHome';
 		this.invoke(cfg);
 	}
+
+	static getUserConfig(cfg){
+		cfg.cmd = cfg.cmd || 'getUserConfig';
+		this.invoke(cfg);
+	}
 }

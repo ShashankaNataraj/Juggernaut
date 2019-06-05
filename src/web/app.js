@@ -10,6 +10,9 @@ import "./styles/styles.scss";
 import Actions from "./Actions";
 
 $(() => {
+	RPC.getUserConfig({
+		cb:"parse_user_config"
+	});
 	console.log(List);
 	let editor = ace.edit(document.querySelector('#editor'), {
 		showPrintMargin: false,
@@ -43,4 +46,5 @@ $(() => {
 		}
 	});
 	window.load_file = Actions.loadFile.bind(actionScope, editor);
+	window.parse_user_config = Actions.parseUserConfig.bind(actionScope, editor);
 });
