@@ -1,6 +1,8 @@
 <img src="https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Mask_Juggernaut-512.png" alt="drawing" width="100"/>
 
 [![Gitter](https://badges.gitter.im/https-github-com-ShashankaNataraj-Juggernaut/community.svg)](https://gitter.im/https-github-com-ShashankaNataraj-Juggernaut/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![HitCount](http://hits.dwyl.io/ShashankaNataraj/Juggernaut.svg)](http://hits.dwyl.io/ShashankaNataraj/Juggernaut)
+
 
 ## Yet another text editor?
 I've used emacs(with and without spacemacs), Vim, WebStorm, and everything in between. I keep coming back to webstorm and vim due to 1 reason: The features webstorm provides are amazing. But WebStorm is a resource hog. Vim is a light saber, and excels at fast editing. Plugins do bog vim down in terms of speed.
